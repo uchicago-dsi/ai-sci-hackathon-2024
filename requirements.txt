@@ -1,0 +1,12 @@
+torch==2.1.2
+torchvision
+torchaudio
+torch_geometric
+matplotlib
+pytorch-lightning
+scikit-learn
+pandas
+tensorboard
+jupyterlab
+networkx
+tensorflow[and-cuda]

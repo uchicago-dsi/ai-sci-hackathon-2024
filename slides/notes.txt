@@ -1,0 +1,9 @@
+Better instructions on where to go on midway
+`/project/dfreedman/hackathon`
+prune github
+
+mention permutation invariance
+
+mention that atomic is the most important feature
+
+https://dmol.pub/dl/gnn.html

@@ -1,0 +1,148 @@
+\ProvidesPackage{beamercolorthememyong}
+\RequirePackage{tangocolors}
+%\selectcolormodel{cmyk}
+\mode<presentation>
+
+
+%\setbeamercolor{section in toc}{fg=gruen1}
+\setbeamercolor{alerted text}{fg=pmered}
+\setbeamercolor{headline}{fg=pmered,bg=white}
+\setbeamercolor{footline}{fg=pmeblue, bg=pmeblue}
+\setbeamercolor{separation line}{bg=pmeblue}
+\setbeamercolor{title in headline}{fg=pmered}
+\setbeamercolor{author in headline}{fg=pmered}
+\setbeamercolor{institute in headline}{fg=pmered}
+\setbeamercolor{part title}{fg=pmered,bg=white}
+\setbeamercolor{framesubtitle}{fg=pmered, bg=white}
+\setbeamercolor{author in head/foot}{fg=pmered, bg=pmegrey}
+\setbeamercolor{title in head/foot}{fg=pmered, bg=pmegrey}
+
+% \setbeamercolor*{normal text}{fg=black, bg=white}
+\setbeamercolor*{normal text}{fg=black, bg=white}
+
+\setbeamercolor*{block body}{bg=pmegrey,fg=black}
+\setbeamercolor*{block title}{fg=white,bg=pmered}
+\setbeamerfont{block title}{size=\large,series=\bf}
+\setbeamercolor{upper separation line head}{fg=pmegrey}
+
+\setbeamercolor*{example body}{fg=ta3aluminium,bg=black}
+\setbeamercolor*{example text}{fg=ta3aluminium,bg=black}
+\setbeamercolor*{example title}{bg=tabutter,fg=ta2gray}
+
+\setbeamercolor*{block body alerted}{bg=pmeblue,fg=black}
+\setbeamercolor*{block title alerted}{fg=gaugred,bg=pmegrey}
+\setbeamerfont{block title alerted}{size=\large,series=\bf}
+%\setbeamercolor{alerted text}{fg=pmered}
+
+\setbeamercolor*{block body example}{bg=white,fg=black}
+\setbeamercolor*{block title example}{fg=black,bg=pmeblue}
+\setbeamerfont{block title example}{size=\normalsize,series=\bf}
+\setbeamercolor{example text}{fg=pmered}
+
+
+\setbeamercolor{structure}{fg=pmered}
+
+
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{navigation symbols}{}  % no navigation on a poster
+
+\setbeamercovered{invisible}
+%\setbeamercovered{transparent}
+\beamertemplatenavigationsymbolsempty
+%\setbeamertemplate{footline}[my own]
+
+\usefonttheme{default}
+%default | professionalfonts | serif |
+%structurebold | structureitalicserif |
+%structuresmallcapsserif
+
+\useinnertheme{default}
+%circles | default | inmargin |
+%rectangles | rounded
+
+\useoutertheme{infolines}
+%default | infolines | miniframes |
+%shadow | sidebar | smoothbars |
+%smoothtree | split | tree
+
+
+%\AtBeginSection{\frame{\sectionpage}}
+%\setbeamertemplate{section page}
+%{
+%  \frametitle{\insertsection}
+%  %\tableofcontents
+%}
+
+
+%Exclude appendix from framenumbering
+\newcommand{\beginbackup}{
+  \newcounter{framenumbervorappendix}
+  \setcounter{framenumbervorappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+  \addtocounter{framenumbervorappendix}{-\value{framenumber}}
+  \addtocounter{framenumber}{\value{framenumbervorappendix}}
+}
+
+%\renewcommand{\thefootnote}{\fnsymbol{footnote1}}
+
+%For footnotes without a marker
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\addtobeamertemplate{footnote}{\vspace{-6pt}\advance\hsize-0.5cm}{\vspace{6pt}}
+\makeatletter
+\renewcommand*\footnoterule{}
+
+\newcommand\citationtext{}
+
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+    \rule{0pt}{0.5pt}
+  \end{beamercolorbox}
+
+  \leavevmode%
+  \begin{beamercolorbox}[leftskip=0.05\paperwidth,ht=2.ex,rightskip=0.05\paperwidth]{block title example}%
+    \usebeamerfont{title in head/font}{\insertshortauthor}
+    \hfill
+    \usebeamerfont{title in head/food}{\citationtext}
+    \hfill
+    \usebeamerfont{title in head/foot}\insertframenumber\,/\,\inserttotalframenumber
+  \end{beamercolorbox}
+  \vskip0pt%
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+    \rule{0pt}{0.5pt}
+  \end{beamercolorbox}
+}
+
+\newcommand\Switch{0}
+\newcommand\SecInHead{%
+  \ifthenelse{\equal{\Switch}{1}}
+  {\addtocounter{section}{-1}\thesection)     \addtocounter{section}{1}}{}}
+
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \hbox{%
+
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
+      \usebeamerfont{section in head/foot}\SecInHead\insertsectionhead\hspace*{2ex}
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{subsection in head/foot}%
+      \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\setbeamercolor{bibliography entry author}{fg=pmered}
+\setbeamercolor{bibliography entry title}{fg=pmered}
+\setbeamercolor{bibliography entry location}{fg=pmered}
+\setbeamercolor{bibliography entry note}{fg=pmered}
+
+
+\mode
+<all>
