@@ -4,8 +4,6 @@ import numpy as np
 import copy
 import hashlib
 
-from util import SEED, SMI
-
 from helper import load_data_from_file, write_data_to_json_file
 
 
@@ -48,11 +46,11 @@ def write_out_data(data_in, outname):
         data_out[name] = graph
     write_data_to_json_file(data_out, outname, indent=2)
 
-def write_perm_data(data_in, smi, num_permuted_graphs, file_name):
+def write_perm_data(data_in, seed, smi, num_permuted_graphs, file_name):
     perm_graphs = {}
     graph = data_in[smi]
     half_graph = remove_param(copy.deepcopy(graph))
-    rng = np.random.default_rng(seed=SEED)
+    rng = np.random.default_rng(seed=seed)
     permutation_dict = {}
     for _ in range(50):
         perm = get_permutation(len(half_graph), rng)
@@ -68,9 +66,10 @@ def write_perm_data(data_in, smi, num_permuted_graphs, file_name):
     write_data_to_json_file(perm_graphs, f"{file_name}_masked.json", indent=2)
 
 def main():
+    from util import SEED, SMI
     data_in = load_data_from_file("competition.json")
     write_out_data(data_in, "validation_masked.json")
-    write_perm_data(data_in, SMI, 50, "permutation")
+    write_perm_data(data_in, SEED, SMI, 50, "permutation")
 
     data_in_tmp = load_data_from_file("data.json")
     # To save space we only us a couple graphs as example
@@ -82,7 +81,7 @@ def main():
             break
 
     write_out_data(data_in, "validation_example.json")
-    write_perm_data(data_in, smi, 5, "permutation_example")
+    write_perm_data(data_in, SEED, smi, 5, "permutation_example")
     print(smi)
 
 

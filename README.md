@@ -44,7 +44,7 @@ cd your_name
 
 Clone the hackathon data repository:
 ```
-git clone https://github.com/badeaa3/UChicago-AI-in-Science-Hackathon.git
+git clone https://github.com/uchicago-dsi/ai-sci-hackathon-2024.git
 ```
 
 ## Environment Setup
@@ -79,3 +79,4 @@ To ensure fair resource sharing, minimize the use of interactive jobs and Jupyte
 
  - Teams & Mentors [Spreadsheat](https://docs.google.com/spreadsheets/d/1QbVzLIgxW0LiaMQ5dpUCMQXtT_bGgAvIDExyWpC9UM4/edit?usp=sharing)
  - Invite to [Slack](https://join.slack.com/t/aisciencehack-qop3836/shared_invite/zt-2hx2lpvtf-coICNHwTFARxgFDYfwnvRw)
+ - This [Repo](https://github.com/uchicago-dsi/ai-sci-hackathon-2024)
