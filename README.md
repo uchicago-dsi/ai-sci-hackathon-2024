@@ -44,7 +44,7 @@ cd your_name
 
 Clone the hackathon data repository:
 ```
-git clone https://github.com/badeaa3/UChicago-AI-in-Science-Hackathon.git
+git clone https://github.com/uchicago-dsi/ai-sci-hackathon-2024.git
 ```
 
 ## Environment Setup
