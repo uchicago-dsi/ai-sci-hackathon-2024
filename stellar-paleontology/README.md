@@ -9,5 +9,5 @@ There are three separate challenges for this project and teams are welcome to at
 All three challenges use the same dataset, initial stellar binary parameters and final compact binary parameters for 50 million
 simulated stellar binaries.
 
-The challenges have their own descriptions in [classificaiton.md](classification.md), [regression.md](regression.md), and [generation.md](generation.md).
+The challenges have their own descriptions in [classification.md](classification.md), [regression.md](regression.md), and [generation.md](generation.md).
 Additionally example scripts are provided for the first two challenges showing how to load the data and evaluate the task using very simple models.
