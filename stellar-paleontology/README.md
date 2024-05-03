@@ -1,20 +1,13 @@
 # Machine learning enhanced stellar paleontology
 
-## Getting started
+Observations of compact binary mergers provide rich information about the nature of spacetime, cosmology, and astrophysics.
+In this project we will focus on the last of these.
+The black holes and neutron stars in compact binary mergers formed as the end state of the evolution of (at least) as pair of massive stars.
+By observing these sources we can test our physical models of stellar and binary evolution - a method sometimes referred to as [stellar paleontology](https://www.nature.com/articles/547284a).
 
-Launch an interactive `SLURM` job
+There are three separate challenges for this project and teams are welcome to attempts as many or as few of them as possible.
+All three challenges use the same dataset, initial stellar binary parameters and final compact binary parameters for 50 million
+simulated stellar binaries.
 
-```console
-sinteractive --account=pi-dfreedman -p schmidt-gpu --gres=gpu:1 --qos=schmidt --time 2:00:00
-```
-
-Follow these instructions to launch [`jupyter`](https://rcc-uchicago.github.io/user-guide/software/apps-and-envs/python/?h=jupy#running-jupyterlab).
-
-```console
-HOST_IP=`/sbin/ip route get 8.8.8.8 | awk '{print $7;exit}'`
-echo $HOST_IP
-PORT_NUM=$(shuf -i15001-30000 -n1)
-jupyter-lab --no-browser --ip=$HOST_IP --port=$PORT_NUM
-```
-
-You should now be able to access the `jupyter` server using a URL from the logs.
+The challenges have their own descriptions in [classificaiton.md](classification.md), [regression.md](regression.md), and [generation.md](generation.md).
+Additionally example scripts are provided for the first two challenges showing how to load the data and evaluate the task using very simple models.
