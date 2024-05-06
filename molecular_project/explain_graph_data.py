@@ -11,6 +11,7 @@ print("Please adhere to best practices during training.\n")
 for smiles_string in train_data:
     print(f"Our first data point is described by this SMILES string: {smiles_string}")
     print("For more details on SMILES, visit: https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system\n")
+    print("Do not rely on the SMILES string for trainig, unless you can build it from the graph!")
 
     graph = train_data[smiles_string]
     print("The training data consists of networkx graphs:", graph)
