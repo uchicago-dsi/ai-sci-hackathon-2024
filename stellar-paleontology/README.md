@@ -11,3 +11,5 @@ simulated stellar binaries.
 
 The challenges have their own descriptions in [classification.md](classification.md), [regression.md](regression.md), and [generation.md](generation.md).
 Additionally example scripts are provided for the first two challenges showing how to load the data and evaluate the task using very simple models.
+
+The data is taken from [here](https://zenodo.org/records/6346444) and preprocessed to remove extraneous fields.
