@@ -7,8 +7,9 @@ import numpy as np
 
 import bigsmiles_gen
 
-from util import get_smiles, SEED
+# from util import get_smiles, SEED
 import helper
+import make_permutation
 
 def make_graph_from_smiles(smi):
     big_mol = bigsmiles_gen.Molecule(smi)
@@ -78,15 +79,61 @@ def write_data(all_smi, all_graphs, name):
 
     helper.write_data_to_json_file(dictionary, f"{name}.json")
 
+
+def josh_set():
+    smiles =    [
+        "C1CC1",
+        "C1OC1",
+        "C1NC1",
+        "CCCC(=O)C",
+        "CCC(=O)CC",
+        "CCCCC=O",
+        "CCCC(=O)O",
+        "CCOC(=O)C",
+        "CC(=O)OC(=O)C",
+        "CCNC(=O)C",
+        "CCCC(=O)N",
+        "C1=CC=CC=C1",
+        "C1=CNC=C1",
+        "C1=CNN=C1",
+        "C1=CN=CN1",
+        "C1=CSC=N1",
+        "C1=COC=C1",
+        "C1=CC=C2C(=C1)C=CN2",
+        "C1=CC=C2C(=C1)C=CC=N2",
+        "C1=C2C(=NC=N1)N=CN2",
+    ]
+    josh_graphs = {}
+    for smi in smiles:
+        try:
+            graph = make_graph_from_smiles(smi)
+
+        except RuntimeError as exc:
+            print(smi, ecx)
+        except ValueError as exc:
+            print(smi, exc)
+        except bigsmiles_gen.forcefield_helper.FfAssignmentError as exc:
+            print(smi, exc)
+        else:
+            josh_graphs[smi] = graph
+
+    helper.write_data_to_json_file(josh_graphs, "josh_set.json", indent=2)
+    for smi in josh_graphs:
+        g = josh_graphs[smi]
+        make_permutation.remove_param(g)
+    helper.write_data_to_json_file(josh_graphs, "josh_masked.json", indent=2)
+
+
 def main(argv):
     if len(argv) != 0:
         raise RuntimeError("Specify exactly one SMILES string")
 
-    (data_smi, data_graphs), (competition_smi, competition_graphs) = prepare_sets(3000, 500, SEED)
+    # (data_smi, data_graphs), (competition_smi, competition_graphs) = prepare_sets(3000, 500, SEED)
 
-    write_data(data_smi, data_graphs, "data")
-    write_data(competition_smi, competition_graphs, "competition")
+    # write_data(data_smi, data_graphs, "data")
+    # write_data(competition_smi, competition_graphs, "competition")
 
+    josh_set()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
