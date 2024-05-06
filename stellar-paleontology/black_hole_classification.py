@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from pathlib import Path
 
-import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -18,48 +17,21 @@ def load_classification_data(datadir=DATADIR, metallicity="all"):
     """
     Load the data
     
-    We read the data from the `COMPAS` hdf5 files.
-    We will need entries from two sections for this task:
-    - `BSE_Double_Compact_Objects` records a `Merges_Hubble_Time` attribute which is what we will use for classification.
-    - `BSE_System_Parameters` records the information about the initial state of the binary. Many of these are held constant throughout the simualtion and so we can discard these.
-    
-    We combine the two using the `SEED` attribute which is the (unique) random seed used to choose the initial binary parameters.
-    We remove some keys that aren't relevant for this task.
+    We read the data from the prepepared pickle file.
     
     We have retained parameters that have `ZAMS`$^1$ or `Kick`$^2$ in the name along with our classification target.
 
         1. `ZAMS` (zero-age main sequence) marks when the stars form. Any quantities that are defined at this time are inputs to the simulation.
         2. The kick refers to momentum that is lost during supernova explosions. Technically, these occur later in the simulation, but in practice they are chosen randomly based on some phenomenological prescription.
+
+    We also retain our target, `Merges_Hubble_Time`"
     """
-    ignore = [
-        "Mass(1)", "Mass(2)", "Eccentricity@DCO", "SemiMajorAxis@DCO",
-        "Coalescence_Time", "Recycled_NS(1)", "Unbound",
-        "Time", "Merger", "Semi-Major_Axis", "Stellar_Type@ZAMS(1)",
-        "Stellar_Type@ZAMS(2)", "Stellar_Type(1)", "Stellar_Type(2)",
-        "SEED(OPTION)", "Recycled_NS(2)", "Initial_Mass(1)", "Initial_Mass(2)",
-        "Metallicity", "Metallicity@ZAMS(2)", "CH_on_MS(1)", "CH_on_MS(2)",
-    ]
-    
-    
-    with h5py.File(datadir / f"Z_{metallicity}/COMPAS_Output.h5", "r") as ff:
-        data = ff["BSE_Double_Compact_Objects"]
-        double_compact_objects = pd.DataFrame.from_dict({
-            key: data[key][()] for key in data
-            if key not in ignore and np.ptp(data[key][()]) > 1e-5
-        })
-        data = ff["BSE_System_Parameters"]
-        binary_parameters = pd.DataFrame.from_dict({
-            key: data[key][()] for key in data
-            if key not in ignore and (
-                np.ptp(data[key][()]) > 1e-5
-                or "Metallicity" in key
-            )
-        })
-    
-    double_compact_objects = double_compact_objects.set_index("SEED")
-    binary_parameters = binary_parameters.set_index("SEED")
-    double_compact_objects = pd.concat([double_compact_objects, binary_parameters], axis=1, join="inner")
-    _ = double_compact_objects.dropna(inplace=True)
+    ignore = ["Mass(1)", "Mass(2)", "Eccentricity@DCO", "SemiMajorAxis@DCO", "Coalescence_Time"]
+
+    double_compact_objects = pd.read_pickle(datadir / "compas-data.pkl")
+    for key in ignore:
+        if key in double_compact_objects:
+            del double_compact_objects[key]
     return double_compact_objects
 
 

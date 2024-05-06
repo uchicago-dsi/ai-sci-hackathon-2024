@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from pathlib import Path
 
-import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -18,39 +17,14 @@ def load_regression_data(datadir=DATADIR, metallicity="all"):
     For this we will use publicly available datasets from [zenodo](https://zenodo.org/records/6346444).
     This data is a set of hdf5 files containing information about the initial state, evolution, and end state of the binaries.
 
-    Below we extract the initial system parameters and the final masses of the two objects.
-    These are stored in different attributes and because not every initial binary forms a compact binary, we merge on the `SEED` attribute that uniquely identifies each binary.
- 
     We remove some keys that aren't relevant for this task.
     These are mostly a mixture of discrete flags and entries that are repeated.
 
     To make the fit easier we downselect the data to only include final masses between 3 and 110.
     """
-    ignore = [
-        "Merges_Hubble_Time", "Recycled_NS(1)", "Unbound",
-        "Time", "Merger", "Semi-Major_Axis", "Stellar_Type@ZAMS(1)",
-        "Stellar_Type@ZAMS(2)", "Stellar_Type(1)", "Stellar_Type(2)",
-        "SEED(OPTION)", "Recycled_NS(2)", "Initial_Mass(1)", "Initial_Mass(2)",
-        "Metallicity", "Metallicity@ZAMS(2)", "CH_on_MS(1)", "CH_on_MS(2)",
-    ]
+    ignore = ["Merges_Hubble_Time"]
     
-    
-    with h5py.File(DATADIR / "Z_all/COMPAS_Output.h5", "r") as ff:
-        data = ff["BSE_Double_Compact_Objects"]
-        double_compact_objects = pd.DataFrame.from_dict({
-            key: data[key][()] for key in data
-            if key not in ignore and np.ptp(data[key][()]) > 1e-5
-        })
-        data = ff["BSE_System_Parameters"]
-        binary_parameters = pd.DataFrame.from_dict({
-            key: data[key][()] for key in data if
-            key not in ignore and np.ptp(data[key][()]) > 1e-5
-        })
-    
-    double_compact_objects = double_compact_objects.set_index("SEED")
-    binary_parameters = binary_parameters.set_index("SEED")
-    double_compact_objects = pd.concat([double_compact_objects, binary_parameters], axis=1, join="inner")
-    double_compact_objects.dropna(inplace=True)
+    double_compact_objects = pd.read_pickle(DATADIR / "compas-data.pkl")
 
     double_compact_objects = double_compact_objects[
         (double_compact_objects["Mass(1)"] < 110)
