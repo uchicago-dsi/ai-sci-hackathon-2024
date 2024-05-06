@@ -19,11 +19,9 @@ For the case here $\theta$ are parameters describing the initial state of a stel
 
 ## Data
 
-The data are available from `/project/dfreedman/colmt/UChicago-AI-in-Science-Hackathon/stellar-paleontology-data/`.
-In this directory there are many subdirectory containining files that follow the pattern `Z_{...}/COMPAS_Output.h5`.
-The `...` represents the metallicity of the stars considered with all being a random sampling of metallicities.
-The final evaluation data consists of data removed randomly from these files and so for best results you should train on all the data.
-The function `load_classification_data` will load the data from a single file, you can then combine these in your scripts.
+The data are available at `/project/dfreedman/colmt/UChicago-AI-in-Science-Hackathon/compas-data.pkl`.
+The final evaluation data consists of data removed randomly from the same inputs.
+The function `load_classification_data` will load the data.
 
 ## Evaluation
 
