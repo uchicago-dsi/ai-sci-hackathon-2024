@@ -17,6 +17,7 @@ def compare_property(property_name:str, result_dict, ref_dict, max_node_size:int
     ref_data = []
 
     miss_counter = 0
+    node_counter = 0
     for smi in ref_dict:
         m = hashlib.shake_256()
         m.update(bytes(smi, "utf-8"))
@@ -24,6 +25,7 @@ def compare_property(property_name:str, result_dict, ref_dict, max_node_size:int
         if name not in result_dict:
             miss_counter += 1
         else:
+            node_counter += len(ref_dict[smi])
             result_data.append(get_graph_property_data(property_name, result_dict[name]))
             ref_data.append(get_graph_property_data(property_name, ref_dict[smi]))
     result_data = np.asarray(result_data)
@@ -36,7 +38,7 @@ def compare_property(property_name:str, result_dict, ref_dict, max_node_size:int
     print(f"# Negative values detected: {negative_counter}")
 
     sq_diff = (result_data - ref_data)**2
-    RMS = np.sqrt(np.mean(sq_diff))
+    RMS = np.sqrt(np.sum(sq_diff)/node_counter)
     MAX = np.sqrt(np.max(sq_diff))
     print(f"Root Mean Squared Difference: {RMS}")
     print(f"Max difference: {MAX}")
@@ -79,15 +81,16 @@ def compare_permutation(property_name:str, result_dict, ref_graph, permutation_d
     ref_data = []
 
     miss_counter = 0
+    node_counter = 0
     for name in permutation_dict:
         perm = np.asarray(permutation_dict[name], dtype=int)
         try:
             inv_permutation = get_inv_permutation(perm)
             graph = result_dict[name]
             inv_graph = apply_permutation(graph, inv_permutation)
-
             result_data.append(get_graph_property_data(property_name, inv_graph))
             ref_data.append(get_graph_property_data(property_name, ref_graph))
+            node_counter += len(ref_graph)
         except Exception as exc:
             print(exc)
             miss_counter += 1
@@ -102,7 +105,7 @@ def compare_permutation(property_name:str, result_dict, ref_graph, permutation_d
     print(f"# Negative values detected: {negative_counter}")
 
     sq_diff = (result_data - ref_data)**2
-    RMS = np.sqrt(np.mean(sq_diff))
+    RMS = np.sqrt(np.sum(sq_diff)/node_counter)
     MAX = np.sqrt(np.max(sq_diff))
     print(f"Root Mean Squared Difference: {RMS}")
     print(f"Max difference: {MAX}")
