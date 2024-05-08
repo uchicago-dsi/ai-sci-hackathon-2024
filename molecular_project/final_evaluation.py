@@ -36,9 +36,12 @@ def compare_property(property_name:str, result_dict, ref_dict, max_node_size:int
     print(f"# Negative values detected: {negative_counter}")
 
     sq_diff = (result_data - ref_data)**2
-    print(f"Root Mean Squared Difference: {np.sqrt(np.mean(sq_diff))}")
-    print(f"Max difference: {np.sqrt(np.max(sq_diff))}")
+    RMS = np.sqrt(np.mean(sq_diff))
+    MAX = np.sqrt(np.max(sq_diff))
+    print(f"Root Mean Squared Difference: {RMS}")
+    print(f"Max difference: {MAX}")
     print("\n")
+    return RMS, MAX, miss_counter, negative_counter
 
 
 def add_data_from_prediction(result_dict, rng):
@@ -106,10 +109,13 @@ def compare_permutation(property_name:str, result_dict, ref_graph, permutation_d
     print(f"# Negative values detected: {negative_counter}")
 
     sq_diff = (result_data - ref_data)**2
-    print(f"Root Mean Squared Difference: {np.sqrt(np.mean(sq_diff))}")
-    print(f"Max difference: {np.sqrt(np.max(sq_diff))}")
+    RMS = np.sqrt(np.mean(sq_diff))
+    MAX = np.sqrt(np.max(sq_diff))
+    print(f"Root Mean Squared Difference: {RMS}")
+    print(f"Max difference: {MAX}")
     print("\n")
 
+    return RMS, MAX, miss_counter, negative_counter
 
 
 
